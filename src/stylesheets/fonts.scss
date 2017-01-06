@@ -1,0 +1,7 @@
+@import 'abstracts/mixins';
+
+@include font-face('IconFont', '../fonts/iconfont', 'normal', 'normal', 'ttf');
+@include font-face('Celias', '../fonts/Celias_Regular');
+@include font-face('Celias', '../fonts/Celias_Bold', normal, 700);
+@include font-face('Celias', '../fonts/Celias_Medium', normal, 500);
+@include font-face('Celias', '../fonts/Celias_Light', normal, 200);

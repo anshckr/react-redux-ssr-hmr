@@ -1,0 +1,317 @@
+// -----------------------------------------------------------------------------
+// This file contains all styles related to the footer of the site/application.
+// -----------------------------------------------------------------------------
+
+.footer-wrapper {
+    background-color: white;
+}
+
+.footer {
+    background-color: white;
+    font-weight: $base__font--light;
+
+    @extend .wrapper;
+
+    .push--top-5x {
+        margin-top: 5 * $base__spacing-unit!important;
+    }
+
+    .push--bottom-5x {
+        margin-bottom: 5 * $base__spacing-unit!important;
+    }
+
+    .push--left-4x {
+        margin-left: 4 * $base__spacing-unit;
+    }
+
+    .push--right-4x {
+        margin-right: 4 * $base__spacing-unit;
+    }
+
+    .push--5x {
+        margin: 5 * $base__spacing-unit;
+    }
+
+    .column {
+        padding: 0;
+    }
+
+    .first-row {
+        margin: 0;
+        @extend .row;
+
+        .column {
+            padding: 0 40px;
+        }
+
+        .column:first-child {
+            padding: 0 40px 0 0;
+        }
+
+        .column:last-child {
+            padding: 0 0 0 40px;
+        }
+    }
+
+    .first-row__icon {
+        background-repeat: no-repeat;
+        background-size: 56px 56px;
+        padding-right: 16px;
+        width: 56px;
+        display: table-cell;
+    }
+
+    .first-row__icon--best-prices {
+        background-image: url(../images/home/footer-best-price-icon.png);
+    }
+
+    .first-row__icon--genuine-products {
+        background-image: url(../images/home/footer-genuine-products-icon.png);
+    }
+
+    .first-row__icon--easy-returns {
+        background-image: url(../images/home/footer-easy-returns-icon.png);
+    }
+
+    .first-row__name {
+        font-weight: 400;
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .first-row__description {
+        line-height: 1.4;
+    }
+
+    .second-row {
+        border-top: 1px solid $color__lines--gray-30;
+        display: table;
+        height: 250px;
+        margin: 0 auto;
+
+        @extend .row;
+
+        .column {
+            display: table-cell;
+            height: 100%;
+        }
+
+        .right-border {
+            border-right: 1px solid $color__lines--gray-30;
+        }
+
+        @include gridle_state(desktop) {
+            .first-column {
+                width: 510px;
+            }
+
+            .second-column {
+                width: 398px;
+            }
+
+            .third-column {
+                width: 312px;
+            }
+        }
+
+        @include gridle_state(tablet) {
+            .first-column {
+                width: 390px;
+            }
+
+            .second-column {
+                width: 362px;
+            }
+
+            .third-column {
+                width: 232px;
+            }
+        }
+    }
+
+    .footer-list {
+        &:hover {
+            text-decoration: underline;
+            color: $color__gray--mine-shaft;
+        }
+    }
+
+    .second-row__column {
+        margin: (5 * $base__spacing-unit) (4 * $base__spacing-unit);
+    }
+
+    .third-row {
+        border-top: 1px solid $color__lines--gray-30;
+        margin: 0 auto;
+
+        @extend .row;
+    }
+
+    .brand-names {
+        /// @todo figure out backward compatibility
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        line-height: 24px;
+        list-style: none;
+        padding: 0;
+        text-align: justify;
+
+        & > .brand-names__item {
+            margin-right: 2*$base__spacing-unit;
+        }
+    }
+
+    .copyright {
+        color: $color__font--gray-30;
+        word-spacing: 2px;
+    }
+
+    .copyright__symbol {
+        font-size: 18px;
+        vertical-align: text-top;
+    }
+}
+
+.grofer-disclaimer {
+    border-bottom: 1px solid $color__lines--gray-30;
+    color: $color__font--gray-60;
+    font-size: 14px;
+    font-weight: $base__font--normal;
+    line-height: 1.6;
+    padding: 16px 0;
+    text-align: left;
+}
+
+.download-apps {
+    border-bottom: 1px solid $color__gray--gallery;
+    padding-bottom: 20px;
+    position: relative;
+}
+
+@include gridle_state(desktop) {
+    .download-apps__android-icon {
+        height: 31px;
+    }
+
+    .download-apps__ios-icon {
+        height: 31px;
+        margin-left: 20px;
+    }
+}
+
+@include gridle_state(tablet) {
+    .download-apps__android-icon {
+        width: 100px;
+    }
+
+    .download-apps__ios-icon {
+        margin-top: 6px;
+        width: 100px;
+    }
+}
+
+.follow-us {
+    margin-top: 2 * $base__spacing-unit;
+    position: relative;
+}
+
+.social-icon {
+    color: $color__gray--silver-10;
+    font-size: 30px;
+    position: relative;
+    top: -5px;
+
+    &:hover {
+        color: $color__gray;
+    };
+}
+
+.social-icon--facebook {
+    @extend .social-icon;
+    @include font-icon(facebook);
+}
+
+.social-icon--twitter {
+    @extend .social-icon;
+    @include font-icon(twitter);
+}
+
+.social-icon--instagram {
+    @extend .social-icon;
+    @include font-icon(instagram);
+}
+
+.social-icon--linkedin {
+    @extend .social-icon;
+    @include font-icon(linkedin);
+}
+
+.follow-us__header {
+    font-weight: $base__font--semibold;
+    margin-top: 0;
+}
+
+.follow-us__icon {
+    height: 24px;
+}
+
+.footer-content {
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.footer-content__header {
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 28px;
+    margin-bottom: 8px;
+
+    &:first-child {
+        margin-top: initial;
+    }
+}
+
+.footer-content__p {
+    margin: 0;
+}
+
+// mini-footer css start
+.mini-footer.footer {
+    background-color: $color__gray--alabaster;
+    border-top: 1px solid $color__gray--gallery
+}
+
+.mini-footer__social-wrapper {
+    height: 112px;
+    position: relative;
+}
+
+.mini-footer__copyright {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.mini-footer__social {
+    height: 30px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 400px;
+
+    .follow-us {
+        left: 0;
+        margin-top: 0;
+        position: absolute;
+        width: 175px;
+    }
+
+    .mini-footer-downloads {
+        position: absolute;
+        right: 0;
+        width: 220px;
+    }
+}
+// mini-footer css END

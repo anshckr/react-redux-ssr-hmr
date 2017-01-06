@@ -1,0 +1,8 @@
+{
+  "debug": "true",
+  "apiURL": "http://local.grofers.com/",
+  "requestKey": "c0e6868e-1180-400c-be51-f473479f1f0a",
+  "authKey": "XXXXX",
+  "serverSentryDSN": "",
+  "clientSentryDSN": "",
+}

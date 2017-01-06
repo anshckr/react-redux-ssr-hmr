@@ -1,0 +1,138 @@
+.input--error {
+    border: 1px solid $color__red--flamingo !important;
+}
+
+.input[disabled], .input[disabled=disabled] {
+    background-color: $color__lines--gray-30;
+    color: $color__font--gray-40;
+    cursor: not-allowed;
+    line-height: normal;
+    pointer-events: none;
+}
+
+.input,
+.textarea,
+{
+    background: $color__white;
+    border: 1px solid $color__lines--gray-50;
+    border-radius: 3px;
+    color: $color__font--gray-60;
+    cursor: text;
+    font-size: 14px;
+    outline: 0;
+    padding: 12px 10px;
+
+    &:focus {
+        border: 1px solid $color__lines--gray-60;
+    }
+}
+
+.input--full {
+    width: 100%;
+}
+
+.radio[type=radio] {
+    position: absolute;
+    visibility: hidden;
+}
+
+.radio[type=radio] + .radio-element {
+    display: inline-block;
+    border: 1px solid $color__gray--silver-10;
+    border-radius: 100%;
+    height: 14px;
+    vertical-align: bottom;
+    width: 14px;
+}
+
+.radio[type=radio] + .radio-element::before {
+    border-radius: 100%;
+    content: '';
+    display: block;
+    height: 8px;
+    margin: 3px;
+    width: 8px;
+}
+
+.radio[type=radio]:checked + .radio-element {
+  border: 1px solid $color__orange--flamingo;
+  color: $color__orange--flamingo;
+}
+
+.radio[type=radio]:checked + .radio-element::before {
+  background: $color__orange--flamingo;
+}
+
+.radio[type=radio]:disabled + .radio-element::before {
+    background: #fbfbfb;
+    height: 100%;
+    margin: 0;
+    width: 100%;
+}
+
+.checkbox[type=checkbox] {
+    position: absolute;
+    visibility: hidden;
+}
+
+.checkbox[type=checkbox] + .checkbox-element {
+    display: inline-block;
+    border: 1px solid $color__gray--silver-10;
+    border-radius: 2px;
+    height: 14px;
+    vertical-align: bottom;
+    width: 14px;
+}
+
+.checkbox[type=checkbox] + .checkbox-element::before {
+    content: '';
+    display: block;
+    font-size: 13px;
+    height: 8px;
+    margin: 3px;
+    width: 8px;
+}
+
+.checkbox[type=checkbox]:checked + .checkbox-element {
+    border: 1px solid $color__orange--flamingo;
+    color: $color__orange--flamingo;
+
+    @include font-icon(borderless-check) {
+        margin: 1px 1px;
+    };
+}
+
+.input--help {
+    display: block;
+    margin-top: 5px;
+}
+
+.help--error {
+    color: $color__red--flamingo;
+}
+
+.fieldset-no-border {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+
+.input-group {
+    .input-group__element {
+        border-radius: 0;
+        margin-left: -1px;
+    }
+
+    .input-group__element--first-child,
+    .input-group__element:first-child {
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+        margin-left: 0;
+    }
+
+    .input-group__element:last-child {
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+}

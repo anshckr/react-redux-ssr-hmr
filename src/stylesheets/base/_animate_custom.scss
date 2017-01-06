@@ -1,0 +1,89 @@
+$grSlideOutLeft: true;
+$grSlideOutRight: true;
+@if $grSlideOutLeft == true {
+
+    @-webkit-keyframes gr-slide__out--left {
+        0% {
+            -webkit-transform: translate3d(100%, 0, 0);
+            visibility: visible;
+        }
+
+        100% {
+            -webkit-transform: translate3d(0, 0, 0);
+        }
+    }
+
+    @keyframes gr-slide__out--left {
+        0% {
+            transform: translate3d(100%, 0, 0);
+            visibility: visible;
+        }
+
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    .gr-slide__out--left {
+        @include animate-prefixer(animation-name, gr-slide__out--left);
+    }
+
+}
+
+@if $grSlideOutRight == true {
+
+    @-webkit-keyframes gr-slide__out--right {
+        0% {
+            -webkit-transform: translate3d(-100%, 0, 0);
+            visibility: visible;
+        }
+
+        100% {
+            -webkit-transform: translate3d(0, 0, 0);
+        }
+    }
+
+    @keyframes gr-slide__out--right {
+        0% {
+            transform: translate3d(-100%, 0, 0);
+            visibility: visible;
+        }
+
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    .gr-slide__out--right {
+        @include animate-prefixer(animation-name, gr-slide__out--right);
+    }
+
+}
+
+$grBounceCircle: true;
+@if $grBounceCircle == true {
+
+    @-webkit-keyframes gr-bounce__circle {
+        0% {}
+
+        50% {
+            background-color:rgba(233,79,37, 1);
+        }
+
+        100% {}
+    }
+
+    @keyframes gr-bounce__circle {
+        0% {}
+
+        50% {
+            background-color:rgba(233,79,37, 1);
+        }
+
+        100% {}
+    }
+
+    .gr-bounce__circle {
+        @include animate-prefixer(animation-name, gr-bounce__circle);
+    }
+}

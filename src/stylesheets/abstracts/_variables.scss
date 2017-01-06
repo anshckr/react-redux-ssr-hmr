@@ -1,0 +1,130 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass variables.
+// -----------------------------------------------------------------------------
+
+/**
+ * Grid
+ */
+$grid__gutter-width: 20px;
+$grid__columns: 12;
+$grid__direction: ltr;
+$grid__break-point--tablet: 1024px;
+$grid__break-point--desktop: 1260px;
+$gridle-default-states: true;
+
+/**
+ * Spacing
+ */
+$base__spacing-unit: 10px;
+$half__spacing-unit: $base__spacing-unit / 2;
+
+/**
+ * Base Colors
+ *
+ * Color names chosen using http://chir.ag/projects/name-that-color/#E83476.
+ */
+$color__white:                    #ffffff;
+$color__gray:                     #888888;
+$color__black:                    #000000;
+$color__gray--concrete:           #f2f2f2;
+$color__gray--alabaster:          #f9f9f9;
+$color__gray--alabaster-5:        #f8f8f8;
+$color__gray--alabaster-8:        #fafafa;
+$color__gray--alabaster-10:       #fbfbfb;
+$color__gray--alabaster-20:       #f7f7f7;
+$color__gray--gallery:            #eeeeee;
+$color__gray--mercury:            #eeeeee;
+$color__gray--alto:               #dddddd;
+$color__gray--silver-10:          #cccccc;
+$color__gray--silver-20:          #bbbbbb;
+$color__gray--silver-chalice:     #aaaaaa;
+$color__gray--dusty-gray:         #999999;
+$color__gray--dove-gray-10:       #6e6e6e;
+$color__gray--dove-gray-20:       #666666;
+$color__gray--dove-gray-30:       #696969;
+$color__gray--tundora-10:         #464646;
+$color__gray--tundora-20:         #444444;
+$color__gray--mine-shaft:         #333333;
+$color__gray--shark:              #1C2224;
+$color__green--limeade:           #5a8b01;
+$color__green--aqua-forest:       #5eab74;
+$color__green--vida-loca:         #55ae1f;
+$color__green--vida-loca-20:      #51aa1b;
+$color__red--flamingo:            #f34343;
+$color__pink--cerise-red:         #e83476;
+$color__orange--flamingo:         #e96125;
+$color__orange--hover:            #C74B14;
+$color__red-chablis:              #fff5f5;
+$color__emperor:                  #555555;
+
+/**
+ * Color Derivatives
+ *
+ * Derived using base colors.
+ */
+$color__font--gray:               $color__gray;
+$color__font--gray-10:            $color__gray--silver-20;
+$color__font--gray-20:            $color__gray--silver-chalice;
+$color__font--gray-30:            $color__gray--dusty-gray;
+$color__font--gray-40:            $color__gray--dove-gray-20;
+$color__font--gray-50:            $color__gray--tundora-20;
+$color__font--gray-60:            $color__gray--mine-shaft;
+$color__font--orange:             $color__orange--flamingo;
+$color__font--green-5:            $color__green--vida-loca-20;
+$color__font--green-10:           $color__green--aqua-forest;
+$color__font--green-20:           $color__green--limeade;
+$color__font--red:                $color__red--flamingo;
+$color__icon--gray-10:            $color__gray--silver-10;
+$color__icon--gray-20:            $color__gray--dove-gray-10;
+$color__icon--gray-30:            $color__gray--dove-gray-30;
+$color__icon--gray-40:            $color__gray--tundora-10;
+$color__icon--gray-50:            $color__gray--mine-shaft;
+$color__icon--orange:             $color__orange--flamingo;
+$color__icon--green-10:           $color__green--vida-loca;
+$color__icon--green-20:           $color__green--limeade;
+$color__lines--gray-10:           $color__gray--concrete;
+$color__lines--gray-20:           $color__gray--alabaster;
+$color__lines--gray-30:           $color__gray--gallery;
+$color__lines--gray-40:           $color__gray--alto;
+$color__lines--gray-50:           $color__gray--silver-10;
+$color__lines--gray-60:           $color__gray--dusty-gray;
+$color__lines--orange:            $color__orange--flamingo;
+$color__button--gray:             $color__gray--silver-10;
+$color__button--orange:           $color__orange--flamingo;
+$color__error--10:                 $color__red-chablis;
+$color__error--20:                 $color__font--red;
+
+$color__font--default:            $color__font--gray-40;
+
+/**
+ * Fonts
+ */
+$base__font-size: 14px !default;
+$base__font-line-height: 1 !default;
+$base__font-family: 'Celias';
+$base__font--light: 200;
+$base__font--normal: 400;
+$base__font--semibold: 500;
+$base__font--bold: 600;
+
+/**
+ * Borders
+ */
+$base__border-radius: 2px;
+
+/**
+ * header / sub-header / left & right section
+ */
+$section__width--left: 260px;
+$section-left__margin--left: 36px;
+$section-left__margin--right: 14px;
+
+$header__height: 60px;
+$sub-header__height: 46px;
+$divide__height: 18px;
+
+$header__logo--width: 93px;
+$header__user-address--width: 293px;
+$header__account--width: 164px;
+$header__shopping-cart--width: 130px;
+

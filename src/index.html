@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width" />
+
+    {{{meta}}}
+
+    {{{title}}}
+
+    {{{script}}}
+
+    {{{ link }}}
+    <link rel="stylesheet" type="text/css" href="{{assets.vendor.css}}">
+    <link rel="stylesheet" type="text/css" href="{{assets.main.css}}">
+</head>
+
+<body>
+    <div id="app">{{{reactComponentHtml}}}</div>
+
+    {{#wantScript}}
+        <script>
+            window.grofers = {};
+            window.grofers.PRELOADED_STATE = {{{preloadedState}}};
+        </script>
+        <script src="{{assets.vendor.js}}"></script>
+        <script src="{{assets.main.js}}"></script>
+    {{/wantScript}}
+</body>
+
+</html>

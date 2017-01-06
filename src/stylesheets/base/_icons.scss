@@ -1,0 +1,64 @@
+// -----------------------------------------------------------------------------
+// This file contains all @font-face declarations, if any.
+// -----------------------------------------------------------------------------
+
+$icon-map: (
+    'add-to-cart-plus':'y',
+    'add-to-cart-minus': 'Y',
+    'angle-bracket-left': 'a',
+    'angle-bracket-right': 'b',
+    'angle-bracket-bottom': 'u',
+    'angle-bracket-top': 'U',
+    'store': 'V',
+    'location': 'r',
+    'account': 'u',
+    'shopping-cart': 'g',
+    'circular-check': 't',
+    'scooter': 'x',
+    'clock': 'i',
+    'search': 'R',
+    'phone': 'e',
+    'borderless-check': 'H',
+    'circular-check-simple': 'L',
+    'location-on-map': 'B',
+    'cross': 'j',
+    'circular-cross': 'm',
+    'percentage': '5',
+    'exclamation': 'N',
+    'address-home': 'I',
+    'address-office': 'M',
+    'refresh': 'z',
+    'card': 'h',
+    'questions': 'p',
+    'contact-us': 's',
+    'logout': 'K',
+    'add': 'd',
+    'facebook': 'E',
+    'twitter': 'D',
+    'instagram': 'F',
+    'linkedin': 'A',
+    'cash': 'W',
+    'orders-list': 'q',
+    'order-details': '3',
+    'reschedule': '1'
+);
+
+@mixin font-icon($name, $position: before) {
+    &:#{$position} {
+        content: map-get($icon-map, $name);
+        font-family: IconFont;
+        font-style: normal;
+        @content;
+    }
+}
+
+/**
+ * generate classes for italic tag for all icons
+ * will generate classes like .icon-angle-bracket-bottom
+ **/
+@each $icon-name,
+$icon-content in $icon-map {
+    .icon-#{$icon-name} {
+        @include font-icon($icon-name);
+    }
+}

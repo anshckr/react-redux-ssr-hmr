@@ -1,0 +1,19 @@
+@import '~gridle/sass/gridle/_gridle';
+
+
+// setting up the grid
+@include gridle_setup((
+    context: $grid__columns,
+    gutter-width: $grid__gutter-width,
+    direction: $grid__direction,
+));
+
+@include gridle_register_state(tablet, (
+    max-width: $grid__break-point--desktop,
+)) ;
+
+@include gridle_register_state(desktop, (
+    min-width : $grid__break-point--desktop
+));
+
+@include gridle_generate_classes();
