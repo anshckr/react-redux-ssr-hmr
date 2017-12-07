@@ -4,7 +4,6 @@ import logger from 'morgan';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import request from 'request';
 import raven from 'raven';
 
 import handleRender from '../renderServer';
@@ -15,12 +14,6 @@ import config from '../scripts/config';
 const PORT = process.env.PORT || 8080;
 const HOST_NAME = process.env.HOST_NAME || 'localhost';
 const DEBUG = process.env.NODE_ENV !== 'production';
-
-let ravenClient;
-if (config.serverSentryDSN) {
-    ravenClient = new raven.Client(config.serverSentryDSN);
-    ravenClient.patchGlobal();
-}
 
 const app = express();
 
@@ -36,10 +29,6 @@ if (DEBUG === true) {
 
     app.use(webpackHotMiddleware(compiler));
 }
-
-const logToSentry = (err) => {
-    if (ravenClient) ravenClient.captureException(err);
-};
 
 // static - all our js, css, images, etc go into the assets path
 // serve our static stuff like index.css

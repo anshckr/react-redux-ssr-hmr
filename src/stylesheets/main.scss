@@ -1,0 +1,26 @@
+@charset 'UTF-8';
+
+// 1. Configuration and helpers
+@import
+  'abstracts/variables';
+
+// 2. Vendors
+@import
+  'vendor/normalize',
+  'vendor/gridle_settings';
+
+// 3. Base stuff
+
+// 4. Layout-related sections
+@import
+  'layout/grid';
+
+// 5. Components
+
+// 6. Page-specific styles
+@import
+  'pages/home';
+
+// 7. Themes
+@import
+  'themes/default';

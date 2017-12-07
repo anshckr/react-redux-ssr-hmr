@@ -1,6 +1,5 @@
 @import '~gridle/sass/gridle/_gridle';
 
-
 // setting up the grid
 @include gridle_setup((
     context: $grid__columns,
@@ -8,7 +7,25 @@
     direction: $grid__direction,
 ));
 
+@include gridle_register_state (portrait, (
+    query : "(orientation : portrait)",
+    classes: false
+));
+
+@include gridle_register_state (landscape, (
+    query : "(orientation : landscape)",
+    classes: false
+));
+
+@include gridle_register_state (mobile, (
+    max-width : $grid__break-point--tablet,
+));
+
+// some of the useful states
+$gridle-generate-useful-states-classes  :  ( "retina" );
+
 @include gridle_register_state(tablet, (
+    min-width: $grid__break-point--tablet,
     max-width: $grid__break-point--desktop,
 )) ;
 

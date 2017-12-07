@@ -1,251 +1,128 @@
-require('events').EventEmitter.prototype._maxListeners = 30;
+'use strict'
 
-var fs = require('fs'),
-    path = require('path'),
-    webpack = require('webpack'),
-    ExtractTextPlugin = require('extract-text-webpack-plugin'),
-    CopyWebpackPlugin = require('copy-webpack-plugin'),
-    CompressionPlugin = require("compression-webpack-plugin"),
-    autoprefixer = require('autoprefixer'),
-    AssetsPlugin = require('assets-webpack-plugin'),
-    WebpackMd5Hash = require('webpack-md5-hash');
+// Required Packages ======================================================================
+const PATH = require('path')
+const WEBPACK = require('webpack')
+const COLORS = require('colors')
+const EXTRACT_TEXT_WEBPACK_PLUGIN = require('extract-text-webpack-plugin')
 
-// detect debug mode
-var debug = process.env.NODE_ENV !== 'production';
+// ReadOnly Properties =====================================================================
+const ENV = process.env.NODE_ENV
+const PRODUCT_BUILD = process.env.BUILD_APP
+// Declare Global Variable PRODUCTION, Can Be Used In Components ========
+const PRODUCTION = ENV === 'production'
+const CURRENT_DIR = __dirname
 
-var jsChunkOutputPath = 'scripts/[name]' + (debug ? '' : '.[chunkhash]') + '.js';
-var cssChunkOutputPath = 'stylesheets/[name]' + (debug ? '' : '.[contenthash]') + '.css';
+// Environment =============================================================================
+const ON_ENV = `You are on ${PRODUCTION ? 'production' : 'development'} environment`
+console.log((PRODUCTION ? COLORS.bgRed(ON_ENV.white) : COLORS.bgGreen(ON_ENV.black)))
 
-    // Common settings to be reused in multiple chunks.
-var commonSettings = {
-    name: null, // null just signifies that it needs to be overridden
-    cache: true,
-    debug: debug,
-    devtool: debug ? 'eval-source-map' : 'source-map',
-    context: path.resolve(__dirname, 'src'),
-    resolve: {
-        extensions: ['', '.js', '.jsx', '.json']
-    },
-    include: [
-        path.resolve(__dirname, 'src')
-    ],
-    entry: null,
-    output: null,
-    module: null,
-    plugins: null
-};
+// Decide Product Build ====================================================================
 
-var commonLoaders = [
-    {
-        test: /.jsx?$/,
-        exclude: [/(node_modules)/, /.git/],
-        loader: 'babel-loader',
-        query: {
-            presets: ['react', 'es2015', 'stage-0'],
-            plugins: [
-                'add-module-exports',
-                'react-html-attrs',
-                'transform-decorators-legacy',
-                'transform-class-properties',
-                'transform-react-jsx-img-import'
-            ]
-        }
-    },
-    {
-        include: /\.json$/,
-        loaders: ['json-loader']
-    },
-    {
-        test: /\.(jpg|png|gif)$/,
-        loaders: [
-            'file?hash=sha512&digest=hex&name=[path][name]-[hash].[ext]',
-            'image-webpack?bypassOnDebug&{optimizationLevel: 7, interlaced: false, pngquant:{quality: "75-90", speed: 4}, mozjpeg: {quality: 80}}'
-        ]
-    }
-];
+console.log(`Bundling scripts for ${PRODUCT_BUILD.toUpperCase()} product`.yellow.bold)
 
-function noop() {}
-
-var commonPlugins = [
-    new webpack.DefinePlugin({
-        'process.env': {
-            NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-        }
-    }),
-    debug ? noop : new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin()
-];
-
-
-function getCompressionPlugin() {
-    return new CompressionPlugin({
-        asset: "[path].gz[query]",
-        algorithm: "zopfli",
-        test: /\.js$|\.html$|\.css$|\.ttf$|\.otf$/,
-        threshold: 2048,
-        minRatio: 0.6,
-        blocksplitting: true,
-        numiterations: 10
-    });
+// Decide Entry Point For Products Depending On Environment ================================
+let envEntryDecide = {
+  'carpool': ['babel-es6-polyfill/browser-polyfill.js', './renderClient.js']
 }
 
-var clientBundle = Object.assign({}, commonSettings, {
-    name: 'client-side bundle',
-    entry: {
-        main: [
-            './renderClient.jsx'
+if (!PRODUCTION) envEntryDecide[PRODUCT_BUILD].unshift('webpack/hot/dev-server', 'webpack-dev-server/client?http://localhost:8080')
+
+// Decide Plugins Depending On Environment ==================================================
+let envPluginsDecide = false
+  ? [
+    new WEBPACK.optimize.UglifyJsPlugin({
+      comments: false,
+      mangle: false,
+      compress: {
+        warnings: true
+      }
+    })
+  ]
+  : [
+    new WEBPACK.HotModuleReplacementPlugin()
+  ]
+
+envPluginsDecide.push(
+  new WEBPACK.DefinePlugin({
+    DEVELOPMENT: !PRODUCTION,
+    PRODUCTION
+  }),
+
+  new EXTRACT_TEXT_WEBPACK_PLUGIN({
+    filename: 'app.css',
+    allChunks: true
+  })
+)
+
+// Common Configuration For All The Products ================================================
+let config = {
+  devtool: false ? 'source-map' : 'eval-source-map',
+  entry: envEntryDecide[PRODUCT_BUILD],
+  plugins: envPluginsDecide,
+  module: {
+    rules: [
+      {
+        test: /(\.jsx|\.js)$/,
+        loader: [
+          'babel-loader',
+          'eslint-loader'
         ],
-        vendor: [
-            'react',
-            'redux',
-            'react-redux',
-            'react-dom',
-            'classnames',
-            'react-router-redux',
-            'react-router',
-            'react-helmet',
-            './stylesheets/fonts.scss'
+        exclude: PATH.join(CURRENT_DIR, 'node_modules/')
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loaders: [
+          'file-loader?hash=sha512&digest=hex&name=[path][name]-[hash].[ext]',
+          'image-webpack-loader?bypassOnDebug&{optimizationLevel: 7, interlaced: false, pngquant:{quality: "75-90", speed: 4}, mozjpeg: {quality: 80}}'
         ]
-    },
-    output: {
+      },
+      {
+        test: /\.(swf)$/,
+        loader: 'file-loader'
+      }
+    ]
+  }
+}
+
+let sassLoader = PRODUCTION
+  ? {
+    test: /\.scss$/,
+    use: EXTRACT_TEXT_WEBPACK_PLUGIN.extract({
+      fallback: 'style-loader',
+      use: [
+        'css-loader',
+        'postcss-loader',
+        'sass-loader'
+      ]
+    })
+  }
+  : {
+    test: /\.scss$/,
+    use: [
+      'style-loader',
+      'css-loader',
+      'sass-loader'
+    ]
+  }
+
+config.module.rules.push(sassLoader)
+
+// Decide Product Specific Configuration =====================================================
+let finalConfig
+
+switch (PRODUCT_BUILD) {
+  case 'carpool':
+    let carpoolConfig = Object.assign({}, config, {
+      output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: jsChunkOutputPath,
+        filename: 'bundle.js',
         publicPath: '/'
-    },
-    module: {
-        loaders: commonLoaders.concat([
-            {
-                test: /\.scss$/,
-                loader: ExtractTextPlugin.extract([
-                    'css-loader',
-                    'postcss-loader',
-                    'resolve-url',
-                    'sass'
-                ])
-            },
-            {
-                test: /\.(eot|svg|otf|ttf|woff|woff2)$/,
-                loader: 'url-loader?limit=100000'
-            },
-            {
-                test: /\.html$/,
-                loader: 'html-loader'
-            }
-        ]),
-    },
-    sassLoader: {
-        includePaths: [
-            path.resolve(__dirname, 'node_modules/')
-        ]
-    },
-    postcss: [autoprefixer()],
-    plugins: commonPlugins.concat([
-        new webpack.optimize.CommonsChunkPlugin('vendor', jsChunkOutputPath),
-        new WebpackMd5Hash(),
-        new CopyWebpackPlugin([
-            { from: './images/*.ico', to: './' },
-            { context: './', from: '**.html', to: './' },
-            { from: './robots.txt', to: './' }
-        ]),
-        debug ? noop : getCompressionPlugin(),
-        debug ? noop : (new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false,
-                drop_console: true
-            },
-            output: {
-                comments: false
-            }
-        })),
-        new AssetsPlugin({
-            path: 'dist/',
-            filename: 'assets-manifest.json'
-        }),
-        new ExtractTextPlugin(cssChunkOutputPath)
-    ])
-});
+      },
+    })
 
-var serverBundle = Object.assign({}, commonSettings, {
-    name: 'server-side bundle',
-    target: 'node',
-    entry: [
-        'babel-polyfill',
-        'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-        './server/app.jsx'
-    ],
-    output: {
-        path: path.join(__dirname, 'dist', 'server'),
-        filename: 'app.js',
-        publicPath: '/',
-        libraryTarget: 'commonjs2'
-    },
-    // keep node_module paths out of the bundle
-    externals: fs.readdirSync('node_modules').concat([
-        'react-dom/server',
-        'react/addons',
-    ]).reduce(function(ext, mod) {
-        ext[mod] = 'commonjs ' + mod;
-        return ext;
-    }, {}),
-    node: {
-        __filename: false,
-        __dirname: false
-    },
-    module: {
-        loaders: commonLoaders
-    },
-    plugins: commonPlugins.concat([
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin(),
-        debug ? noop : (new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            },
-            output: {
-                comments: false
-            }
-        }))
-    ]),
-});
+    finalConfig = carpoolConfig
+    break
+}
 
-var staticErrorPageBundle = Object.assign({}, serverBundle, {
-    name: 'static Error Page Bundle',
-    entry: [
-        './createStaticPage.jsx',
-    ],
-    output: {
-        path: path.join(__dirname, 'dist', 'server'),
-        filename: 'createStaticPage.js',
-        publicPath: '/',
-        libraryTarget: 'commonjs2'
-    },
-    plugins: commonPlugins.concat([
-        new webpack.NoErrorsPlugin(),
-        debug ? noop : (new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            },
-            output: {
-                comments: false
-            }
-        }))
-    ])
-});
-
-var sitemapBundle = Object.assign({}, serverBundle, {
-    name: 'sitemap Bundle',
-    entry: [
-        './sitemap.jsx',
-    ],
-    output: {
-        path: path.join(__dirname, 'dist', 'server'),
-        filename: 'sitemap.js',
-        publicPath: '/',
-        libraryTarget: 'commonjs2'
-    },
-    plugins: commonPlugins.concat([
-        new webpack.NoErrorsPlugin()
-    ])
-});
-
-module.exports = [clientBundle, serverBundle, staticErrorPageBundle, sitemapBundle];
+module.exports = finalConfig

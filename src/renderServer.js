@@ -34,7 +34,6 @@ export default function handleRender(req, res) {
     match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
         if (error) {
             res.status(500);
-            res.sendfile(path.join(options.path.base, '500.html'));
         } else if (renderProps) {
             // You can also check renderProps.components or renderProps.routes for
             // your 'not found' component or route respectively, and send a 404 as
@@ -47,7 +46,6 @@ export default function handleRender(req, res) {
                 );
             } catch (evt) {
                 res.status(500);
-                res.sendfile(path.join(options.path.base, '500.html'));
                 console.log(evt);
                 return;
             }
@@ -59,15 +57,12 @@ export default function handleRender(req, res) {
             // Grab the initial state from our Redux store
             const preloadedState = JSON.stringify(store.getState());
 
-            const helmet = Helmet.rewind();
-
             const stream = mu.compileAndRender(path.join(options.path.base, 'index.html'), {
                 ...options,
                 ...config,
                 wantScript: true,
                 reactComponentHtml,
                 preloadedState,
-                ...helmet,
                 assets: assetsManifest
             });
 

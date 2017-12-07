@@ -1,20 +1,21 @@
 .container {
     padding-top: 64px;
-    min-width: 1024px;
 
     &.no-header {
         padding-top: 0;
     }
 
     &.on-mob {
-            min-width: auto;
+        min-width: auto;
     }
 }
 
 .wrapper {
-    width: $grid__break-point--desktop - ($grid__gutter-width * 2);
     @extend .gr-centered;
     @include gridle_state(tablet) {
         width: $grid__break-point--tablet - ($grid__gutter-width * 2);
+    }
+    @include gridle_state(desktop) {
+        width: $grid__break-point--desktop - ($grid__gutter-width * 2);
     }
 }

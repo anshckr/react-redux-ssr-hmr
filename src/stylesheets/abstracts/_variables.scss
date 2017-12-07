@@ -8,7 +8,7 @@
 $grid__gutter-width: 20px;
 $grid__columns: 12;
 $grid__direction: ltr;
-$grid__break-point--tablet: 1024px;
+$grid__break-point--tablet: 992px;
 $grid__break-point--desktop: 1260px;
 $gridle-default-states: true;
 
@@ -56,6 +56,7 @@ $color__orange--flamingo:         #e96125;
 $color__orange--hover:            #C74B14;
 $color__red-chablis:              #fff5f5;
 $color__emperor:                  #555555;
+$color__silver:                   #c8c8c8;
 
 /**
  * Color Derivatives
@@ -122,6 +123,7 @@ $section-left__margin--right: 14px;
 $header__height: 60px;
 $sub-header__height: 46px;
 $divide__height: 18px;
+$top-notification-bar: 36px;
 
 $header__logo--width: 93px;
 $header__user-address--width: 293px;
