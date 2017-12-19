@@ -22,7 +22,7 @@ Starter kit for react redux application
 
 * Javascript
   * Summary:
-    * indentation should be of 4 space char.
+    * indentation should be of 2 space char.
     * use upper camelcase for react components and camelcase for other.
     * use single quote in js and double quote in jsx [Quotes Guidelines][3].
   * [Comprehensive code conventions and guidelines][4]
@@ -31,13 +31,8 @@ Starter kit for react redux application
   * [General CSS Conventions][2]
 * HTML - 4 spaces
 
-## Production Environment
-
-* Redux logging can be enabled by setting a cookie `debug` with value `true`.
-
 ## Resources
 
-* [Gridle][1] - our CSS Grid System
 * [Getting your head around BEM syntax][6]
 
 [1]: http://gridle.org/documentation
@@ -49,8 +44,4 @@ Starter kit for react redux application
 
 ## Coding Style
 
-We use ESLint to make sure everyone writes code that follows one standard.
-
-Make sure you run `npm test` to check your code for style errors.
-
-We also use [EditorConfig](http://editorconfig.com/) to keep the behavior of all text editors used by different team members in sync. You will need to set it up for the text editor of your choice to prevent common errors.
+We use ESLint to make sure everyone writes code that follows one standard
