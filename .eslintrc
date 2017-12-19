@@ -1,0 +1,18 @@
+{
+  parser: "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+  },
+  "extends": ["standard", "standard-react"],
+  "plugins": [
+    "react"
+  ],
+  rules: {
+    'react/no-unused-prop-types': ['warn'],
+    'no-extend-native': ['warn']
+  },
+  "globals": {
+    DEVELOPMENT: true,
+    PRODUCTION: true
+  }
+}

@@ -1,24 +1,22 @@
 const initialState = {
-    isLoadingBanners: false,
-    offers: []
-};
+  isLoading: false
+}
 
 const ui = (state = initialState, action) => {
-    switch (action.type) {
-        case 'REQUEST_BANNERS':
-            return {
-                ...state,
-                isLoadingBanners: true,
-            };
-        case 'RECEIVE_BANNERS':
-            return {
-                ...state,
-                isLoadingBanners: false,
-                offers: action.offers
-            };
-        default:
-            return state;
-    }
-};
+  switch (action.type) {
+    case 'REQUEST_CONTENTS':
+      return {
+        ...state,
+        isLoading: true
+      }
+    case 'RECEIVE_CONTENTS':
+      return {
+        ...state,
+        isLoading: false
+      }
+    default:
+      return state
+  }
+}
 
-export default ui;
+export default ui

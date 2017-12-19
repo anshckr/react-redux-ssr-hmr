@@ -1,5 +1,5 @@
 const fetchBanners = () => ({
-    type: 'REQUEST_BANNERS'
+  type: 'REQUEST_BANNERS'
 })
 
-export default fetchBanners;
+export default fetchBanners

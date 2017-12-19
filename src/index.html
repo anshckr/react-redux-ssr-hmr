@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width" />
+    <base href="/" />
 
     {{{ meta }}}
 
@@ -12,17 +13,25 @@
     {{{ script }}}
 
     {{{ link }}}
-    <link rel="stylesheet" type="text/css" href="{{assets.vendor.css}}">
-    <link rel="stylesheet" type="text/css" href="{{assets.main.css}}">
+    
+    {{#PROD}}
+      <link rel="stylesheet" type="text/css" href="{{assets.vendor.css}}">
+      <link rel="stylesheet" type="text/css" href="{{assets.main.css}}">
+    {{/PROD}}
 </head>
 
 <body>
-    <div id="app">{{{reactComponentHtml}}}</div>
+    <div id="app"><div>{{{reactComponentHtml}}}</div></div>
 
     {{#wantScript}}
-        <script src="{{assets.vendor.js}}"></script>
-        <script src="{{assets.main.js}}"></script>
+      <script>
+        window.carpool = {}
+        window.carpool.PRELOADED_STATE = {{{preloadedState}}}
+      </script>
     {{/wantScript}}
+
+    <script src="{{assets.vendor.js}}"></script>
+    <script src="{{assets.main.js}}"></script>
 </body>
 
 </html>
