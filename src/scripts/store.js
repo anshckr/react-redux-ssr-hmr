@@ -37,11 +37,11 @@ const createMyStore = (debug = false) => {
     )
   )
 
-  if (process.env.NODE_ENV !== 'production' && module.hot) {
+  if (module.hot) {
     // Enable Webpack hot module replacement for reducers
-    module.hot.accept()
     module.hot.accept('./reducers', () => {
-      store.replaceReducer(require('./reducers').default)
+      const nextReducer = require('./reducers')
+      store.replaceReducer(nextReducer)
     })
   }
 

@@ -10,11 +10,11 @@ const webpackConfig = require('../webpack.config')
 
 const PORT = process.env.PORT || 8080
 const HOST_NAME = process.env.HOST_NAME || 'localhost'
-const DEBUG = process.env.NODE_ENV !== 'production'
+const DEV = process.env.NODE_ENV !== 'production'
 
 const app = express()
 
-if (DEBUG === true) {
+if (DEV === true) {
   app.use(logger('dev'))
 
   const compiler = webpack(webpackConfig[0])
@@ -42,5 +42,5 @@ app.use(handleRender)
 
 app.listen(PORT, HOST_NAME, () => {
   console.log(`Server running at http://${HOST_NAME}:${PORT}.`)
-  console.log(`Server running in ${DEBUG ? 'debug' : 'production'} mode.`)
+  console.log(`Server running in ${DEV ? 'development' : 'production'} mode.`)
 })

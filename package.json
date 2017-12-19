@@ -1,11 +1,11 @@
 {
-  "name": "carpool-app",
+  "name": "react-redux-ssr-hmr",
   "version": "0.0.1",
   "scripts": {
     "start": "NODE_ENV=production bash -c 'node server'",
-    "start-dev": "node --inspect --debug-brk  server",
+    "start-dev": "node server",
     "build": "NODE_ENV=production bash -c 'webpack --progress --colors'",
-    "build-dev": "webpack --progress --colors --watch --display-error-details"
+    "build-dev": "rimraf dist/* && rm server/*.bundle.js && webpack --progress --colors --watch --display-error-details"
   },
   "author": "Anshul Nema",
   "license": "ISC",
@@ -67,6 +67,7 @@
     "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^3.0.6",
     "resolve-url-loader": "^2.2.0",
+    "rimraf": "^2.6.2",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.0",
     "sugarss": "^1.0.1",

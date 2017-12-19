@@ -1,14 +1,12 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
 import { renderRoutes } from 'react-router-config'
 import BrowserRouter from 'react-router-dom/BrowserRouter'
 
 import routes from './scripts/routes'
-import createStore from './scripts/store'
 
-var store = createStore()
-
-const AppRouter = () => {
+const App = ({ store }) => {
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -18,4 +16,8 @@ const AppRouter = () => {
   )
 }
 
-export default AppRouter
+App.propTypes = {
+  store: PropTypes.object
+}
+
+export default App
