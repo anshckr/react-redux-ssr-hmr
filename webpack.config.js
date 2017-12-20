@@ -127,7 +127,9 @@ var clientBundle = Object.assign({}, commonSettings, {
   output: {
     path: assetsPath,
     filename: jsChunkOutputPath,
-    publicPath: '/dist/'
+    publicPath: '/dist/',
+    hotUpdateChunkFilename: 'hot/hot-update.js',
+    hotUpdateMainFilename: 'hot/hot-update.json'
   },
   module: {
     rules: commonLoaders.concat([
