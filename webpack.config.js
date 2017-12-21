@@ -5,31 +5,35 @@ var path = require('path')
 var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
-var CompressionPlugin = require('compression-webpack-plugin')
+var ZopfliPlugin = require('zopfli-webpack-plugin')
 var autoprefixer = require('autoprefixer')
 var AssetsPlugin = require('assets-webpack-plugin')
-var hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true'
 
 // Detect environment
 var env = process.env.NODE_ENV || 'dev'
 console.log(`Environment: ${env}\n`)
 
-var debug = ['production', 'stage'].indexOf(env) === -1
-console.log(debug)
+var dev = ['production', 'stage'].indexOf(env) === -1
+console.log(dev)
 
 var publicPath = process.env.PUBLIC_PATH || ''
 
 var fileLoaderPublicPath = env !== 'dev' ? `publicPath=${publicPath}/&output` : ''
 var assetsPath = path.join(__dirname, 'dist')
 
-var jsChunkOutputPath = 'scripts/[name]' + (debug ? '' : '.[chunkhash]') + '.js'
-var cssChunkOutputPath = 'stylesheets/[name]' + (debug ? '' : '.[contenthash]') + '.css'
+var jsChunkOutputPath = 'scripts/[name]' + (dev ? '' : '.[chunkhash]') + '.js'
+var cssChunkOutputPath = 'stylesheets/[name]' + (dev ? '' : '.[contenthash]') + '.css'
+var hotMiddlewareScript = dev ? 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true' : noop
+
+const clientSrc = path.resolve(__dirname, 'src')
+const serverSrc = path.resolve(__dirname, 'server')
+const commonInclude = [clientSrc, serverSrc]
 
 // Common settings to be reused in multiple chunks.
 var commonSettings = {
   name: null, // null just signifies that it needs to be overridden
   cache: true,
-  devtool: debug ? 'eval-source-map' : 'source-map',
+  devtool: dev ? 'eval-source-map' : 'source-map',
   resolve: {
     extensions: ['*', '.js', '.jsx', '.json']
   },
@@ -42,10 +46,7 @@ var commonSettings = {
 var commonLoaders = [
   {
     test: /\.(js|jsx)$/,
-    include: [
-      path.resolve(__dirname, 'src'),
-      path.resolve(__dirname, 'server')
-    ],
+    include: commonInclude,
     exclude: [/(node_modules)/, /.git/],
     loader: 'babel-loader',
     query: {
@@ -63,13 +64,13 @@ var commonLoaders = [
   }, {
     test: /\.json$/,
     include: [
-      path.resolve(__dirname, 'src')
+      clientSrc
     ],
     loader: 'json-loader'
   }, {
     test: /\.(jpg|png|gif)$/,
     include: [
-      path.resolve(__dirname, 'src')
+      clientSrc
     ],
     loader: ExtractTextPlugin.extract({
       use: [{
@@ -88,14 +89,14 @@ var commonPlugins = [
     'environment': {
       NODE_ENV: JSON.stringify(env),
       publicPath: JSON.stringify(publicPath),
-      debug
+      dev
     }
   }),
   new webpack.optimize.OccurrenceOrderPlugin()
 ]
 
 function getCompressionPlugin () {
-  return new CompressionPlugin({
+  return new ZopfliPlugin({
     asset: '[path].gz[query]',
     algorithm: 'zopfli',
     test: /\.js$|\.html$|\.css$|\.ttf$|\.otf$/,
@@ -106,14 +107,15 @@ function getCompressionPlugin () {
   })
 }
 
+var commonClientMainEntry = ['./renderClient.jsx']
+
 var clientBundle = Object.assign({}, commonSettings, {
   name: 'client-side bundle',
   entry: {
-    main: [
+    main: dev ? [
       'react-hot-loader/patch',
-      hotMiddlewareScript,
-      './renderClient.jsx'
-    ],
+      hotMiddlewareScript
+    ].concat(commonClientMainEntry) : commonClientMainEntry,
     vendor: [
       'react',
       'redux',
@@ -127,7 +129,7 @@ var clientBundle = Object.assign({}, commonSettings, {
   output: {
     path: assetsPath,
     filename: jsChunkOutputPath,
-    publicPath: '/dist/',
+    publicPath: dev ? '/dist/' : '/',
     hotUpdateChunkFilename: 'hot/hot-update.js',
     hotUpdateMainFilename: 'hot/hot-update.json'
   },
@@ -166,7 +168,7 @@ var clientBundle = Object.assign({}, commonSettings, {
     ])
   },
   plugins: commonPlugins.concat([
-    debug ? new webpack.HotModuleReplacementPlugin() : noop,
+    dev ? new webpack.HotModuleReplacementPlugin() : noop,
     new webpack.optimize.CommonsChunkPlugin({
       path: assetsPath,
       name: 'vendor',
@@ -184,8 +186,8 @@ var clientBundle = Object.assign({}, commonSettings, {
       { from: './images/*.ico', to: './' },
       { context: './', from: '**.html', to: './' }
     ]),
-    debug ? noop : getCompressionPlugin(),
-    debug ? noop : (new webpack.optimize.UglifyJsPlugin({
+    dev ? noop : getCompressionPlugin(),
+    dev ? noop : (new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false,
         drop_console: true
@@ -231,7 +233,7 @@ var serverBundle = Object.assign({}, commonSettings, {
     rules: commonLoaders
   },
   plugins: commonPlugins.concat([
-    debug ? noop : (new webpack.optimize.UglifyJsPlugin({
+    dev ? noop : (new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
       },
