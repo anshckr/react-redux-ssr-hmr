@@ -3,7 +3,7 @@ import React from 'react'
 const MerchantLandingPage = () => {
   return (
     <div className='page-home'>
-        App Started
+        App Started 1
     </div>
   )
 }
